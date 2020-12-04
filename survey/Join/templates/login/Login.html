@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<TITLE>로그인</TITLE>
+</HEAD>
+<BODY>
+<form method="POST" action="/login_check/">
+{% csrf_token %}
+<table align=center border=1 bordercolor=white cellspacing=0 cellpadding=2>
+{{form.as_table}}
+<tr bgcolor=#ececec align=center>
+	<td colspan=4>Login</td>
+</tr>
+<tr>
+	<td>ID </td>
+	<td>
+		<input type=text name=ID size=19 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td>PW </td>
+	<td>
+		<input type=password name=Password size=19 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td>
+		<input type=submit value=로그인>
+	</td>
+	<td>
+		<input type=button value=회원가입 onclick="location.href='/join/'">
+		<input type=submit value=ID/PW찾기>
+	</td>
+</tr>
+</form>
+</BODY>
+</HTML>

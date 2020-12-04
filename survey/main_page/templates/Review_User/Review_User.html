@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatiable" content="IE=edje">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<TITLE> Review </TITLE>
+	<link rel="stylesheet" href="{% static 'Review/css/bootstrap.css' %}">
+</HEAD>
+<BODY>
+	<H1>{{ request.session.username }} 님의 상담내역/결과입니다.</H1>
+	<table class="table table-hover">
+		<thead>
+		<tr>
+			<td>No</td>
+			<td>Title</td>
+			<td>Date</td>
+			<td>Answer</td>
+		</tr>
+		</thead>
+		<tbody>
+		{% for data in Submit_Poll_Table_db %}
+		{% if data.Poll_Participant_ID == request.session.username %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td onClick="location.href='/review/{{data.id}}/'" style="cursor:pointer;">{{ request.session.username }}님의 {{ forloop.counter }}번째 상담입니다.</td>
+			<td>{{ data.Poll_date }}</td>
+			{% if data.Admin_Answer != None %}
+			<td>답변완료</td>
+			{% else %}
+			<td>답변 대기중</td>
+			{% endif %}	
+		</tr>
+		{% endif %}
+		{% endfor %}
+		</tbody>
+	</table>
+	<hr/>
+	<div class="text-center">
+		<ul class="pagination">
+			<li><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+		</ul>
+	</div>
+<script src="{% static 'Review/js/bootstrap.js' %}"></script>
+</BODY>
+</HTML>

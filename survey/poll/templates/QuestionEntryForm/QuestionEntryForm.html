@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="utf-8">
+	<TITLE>QuestionEntry</TITLE>
+</HEAD>
+<BODY>
+<form method="POST" action="/poll_entry/">
+{% csrf_token %}
+{{ form.as_table }}
+<table align=center border=1 bordercolor=white cellspacing=0 cellpadding=2>	
+<tr bgcolor=#ececec align=center>
+	<td colspan=4>설문조사 질문 등록</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>질문</td>
+	<td>
+		<input type=text name=Question size=30 maxlength=200> * 필수
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>중복체크</td>
+	<td>
+		<input type=radio name=Bool_overlap value=True> 가능
+		<input type=radio name=Bool_overlap value=False> 불가능
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 1</td>
+	<td>
+		<input type=text name=sel_1 size=20 maxlength=15> * 필수
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 2</td>
+	<td>
+		<input type=text name=sel_2 size=20 maxlength=15> * 필수
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 3</td>
+	<td>
+		<input type=text name=sel_3 size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 4</td>
+	<td>
+		<input type=text name=sel_4 size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 5</td>
+	<td>
+		<input type=text name=sel_5 size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 6</td>
+	<td>
+		<input type=text name=sel_6 size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 7</td>
+	<td>
+		<input type=text name=sel_7 size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 8</td>
+	<td>
+		<input type=text name=sel_8 size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 9</td>
+	<td>
+		<input type=text name=sel_9 size=20 maxlength=15>
+	</td>
+</tr>
+
+<tr>
+	<td bgcolor=#ececec colspan=4 align=center>
+		<input type="submit" value="등록하기">
+	</td>
+</tr>
+</table>
+</form>
+</BODY>
+</HTML>

@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatiable" content="IE=edje">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<TITLE> Review </TITLE>
+	<link rel="stylesheet" href="{% static 'Review/css/bootstrap.css' %}">
+</HEAD>
+<BODY>
+	<H1>{{ total_data.ID }}님의 상담입니다.</H1>
+	<hr/>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<td>신청날짜 : {{ total_data.Date }}</td>
+		</tr>
+		<tr>
+			<td>Question</td>
+			<td>Answer</td>
+		</tr>
+		</thead>
+		<tbody>
+		{% for key,value in total_data.Question_and_Answer %}
+		<tr>
+			<td>{{forloop.counter}}. {{key}}</td>
+			<td>{{value}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<hr/>
+	<form method="POST" action='/review_update/{{ total_data.pk }}/'>
+	{% csrf_token %}
+	{{ form.as_table }}
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				{% if total_data.Admin_Answer != None %}
+				<td>
+				<div class="form-group">
+				  <label>관리자 답변</label>
+				  <textarea class="form-control rounded-0" rows="10" name="Answer">{{ total_data.Admin_Answer }}</textarea>
+				</div>
+				</td>
+				</tr>
+				<tr>
+					<div class="form-group">
+						<label>처방내용</label><hr/>
+						<label>1. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_1" placeholder="약품명">
+						<input type="text" name="med_1_time" placeholder="복용기간">
+						<input type="text" name="med_1_price" placeholder="가격">
+						<label>2. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_2" placeholder="약품명">
+						<input type="text" name="med_2_time" placeholder="복용기간">
+						<input type="text" name="med_2_price" placeholder="가격">
+						<label>3. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_3" placeholder="약품명">
+						<input type="text" name="med_3_time" placeholder="복용기간">
+						<input type="text" name="med_3_price" placeholder="가격">
+						<label>4. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_4" placeholder="약품명">
+						<input type="text" name="med_4_time" placeholder="복용기간">
+						<input type="text" name="med_4_price" placeholder="가격">
+						<label>5. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_5" placeholder="약품명">
+						<input type="text" name="med_5_time" placeholder="복용기간">
+						<input type="text" name="med_5_price" placeholder="가격">
+						<label>6. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_6" placeholder="약품명">
+						<input type="text" name="med_6_time" placeholder="복용기간">
+						<input type="text" name="med_6_price" placeholder="가격">
+					</div>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="등록">
+						<input type="button" value="취소" onClick="location.href='/review_admin/'">
+					</td>						
+				</tr>
+				{% else %}
+				<td>
+				<div class="form-group">
+				  <label>관리자 답변</label>
+				  <textarea class="form-control rounded-0" name="Answer" rows="10"></textarea>
+				</div>
+				</td>
+				</tr>
+				<tr>
+					<div class="form-group">
+						<label>처방내용</label><hr/>
+						<label>1. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_1" placeholder="약품명">
+						<input type="text" name="med_1_time" placeholder="복용기간">
+						<input type="text" name="med_1_price" placeholder="가격">
+						<label>2. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_2" placeholder="약품명">
+						<input type="text" name="med_2_time" placeholder="복용기간">
+						<input type="text" name="med_2_price" placeholder="가격">
+						<label>3. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_3" placeholder="약품명">
+						<input type="text" name="med_3_time" placeholder="복용기간">
+						<input type="text" name="med_3_price" placeholder="가격">
+						<label>4. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_4" placeholder="약품명">
+						<input type="text" name="med_4_time" placeholder="복용기간">
+						<input type="text" name="med_4_price" placeholder="가격">
+						<label>5. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_5" placeholder="약품명">
+						<input type="text" name="med_5_time" placeholder="복용기간">
+						<input type="text" name="med_5_price" placeholder="가격">
+						<label>6. 약품명 / 복용기간 / 가격</label>
+						<input type="text" name="med_6" placeholder="약품명">
+						<input type="text" name="med_6_time" placeholder="복용기간">
+						<input type="text" name="med_6_price" placeholder="가격">
+					</div>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="등록">
+						<input type="button" value="취소" onClick="location.href='/review_admin/'">
+					</td>
+				</tr>
+				{% endif %}
+			</tr>
+		</tbody>
+	</table>
+	</form>
+<script src="{% static 'Review/js/bootstrap.js' %}"></script>
+</BODY>
+</HTML>

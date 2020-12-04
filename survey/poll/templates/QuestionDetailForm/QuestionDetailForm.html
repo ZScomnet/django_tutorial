@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="utf-8">
+	<TITLE>Question</TITLE>
+</HEAD>
+<BODY>
+<form method="POST" action='/poll_submit/'>
+{% csrf_token %}
+<table align=center border=1 bordercolor=white cellspacing=0 cellpadding=2>
+<tr bgcolor=#ececec align=center>
+	<td colspan=2> 설문조사 </td>
+</tr>
+{% for data in poll_db %}
+	<tr>
+		<td>{{ forloop.counter }}. {{ data.Question }}</td>
+	</tr>
+	
+	<tr>
+		<td>
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_1 }}">{{ data.sel_1 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ data.sel_1 }}">{{ data.sel_1 }}
+			{% endif %}
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td>
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_2 }}">{{ data.sel_2 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ data.sel_2 }}">{{ data.sel_2 }}
+			{% endif %}
+		</td>
+	</tr>
+	
+	{% if data.sel_3 != None and data.sel_3 != '' %}
+	<tr>
+		<td>
+				{% if data.Bool_overlap %}
+				<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_3 }}">{{ data.sel_3 }}
+				{% else %}
+				<input type=radio name="{{ data.Question }}" value="{{ data.sel_3 }}">{{ data.sel_3 }}
+				{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	{% if data.sel_4 != None and data.sel_4 != '' %}
+	<tr>
+		<td>
+				{% if data.Bool_overlap %}
+				<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_4 }}">{{ data.sel_4 }}
+				{% else %}
+				<input type=radio name="{{ data.Question }}" value="{{ data.sel_4 }}">{{ data.sel_4 }}
+				{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	{% if data.sel_5 != None and data.sel_5 != '' %}
+	<tr>
+		<td>
+				{% if data.Bool_overlap %}
+				<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_5 }}">{{ data.sel_5 }}
+				{% else %}
+				<input type=radio name="{{ data.Question }}" value="{{ data.sel_5 }}">{{ data.sel_5 }}
+				{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	{% if data.sel_6 != None and data.sel_6 != '' %}
+	<tr>
+		<td>
+				{% if data.Bool_overlap %}
+				<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_6 }}">{{ data.sel_6 }}
+				{% else %}
+				<input type=radio name="{{ data.Question }}" value="{{ data.sel_6 }}">{{ data.sel_6 }}
+				{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	{% if data.sel_7 != None and data.sel_7 != '' %}
+	<tr>
+		<td>
+				{% if data.Bool_overlap %}
+				<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_7 }}">{{ data.sel_7 }}
+				{% else %}
+				<input type=radio name="{{ data.Question }}" value="{{ data.sel_7 }}">{{ data.sel_7 }}
+				{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	{% if data.sel_8 != None and data.sel_8 != '' %}
+	<tr>
+		<td>
+				{% if data.Bool_overlap %}
+				<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_8 }}">{{ data.sel_8 }}
+				{% else %}
+				<input type=radio name="{{ data.Question }}" value="{{ data.sel_8 }}">{{ data.sel_8 }}
+				{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	{% if data.sel_9 != None and data.sel_9 != '' %}
+	<tr>
+		<td>
+				{% if data.Bool_overlap %}
+				<input type=checkbox name="{{ data.Question }}" value="{{ data.sel_9 }}">{{ data.sel_9 }}
+				{% else %}
+				<input type=radio name="{{ data.Question }}" value="{{ data.sel_9 }}">{{ data.sel_9 }}
+				{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	<tr>
+		<td bgcolor=#ececec colspan=3 align=center>
+		</td>
+	<tr>
+{% endfor %}
+<tr>
+	<td bgcolor=#ececec colspan=4 align=center>
+		<input type="submit" value="제출하기">
+	</td>
+</tr>
+</table>
+</form>
+</BODY>
+</HTML>

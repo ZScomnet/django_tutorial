@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="utf-8">
+	<TITLE>Question</TITLE>
+</HEAD>
+<BODY>
+<script>
+function form_submit()
+{
+	var check_submit = confirm('해당 질문을 삭제하겠습니까?');
+	return check_submit;
+}
+</script>
+<table align=center border=1 bordercolor=white cellspacing=0 cellpadding=2>
+<tr bgcolor=#ececec align=center>
+	<td colspan=2> 설문조사 </td>
+</tr>
+{% for data in poll_db %}
+<tr>
+	<td bgcolor=#ececec align=center rowspan=10 width=5></td>
+	<td>{{ forloop.counter }}. {{ data.Question }}</td>
+</tr>
+<tr>
+	<td>{% if data.Bool_overlap %}
+		<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_1 }}">{{ data.sel_1 }}
+		{% else %}
+		<input type=radio name="{{ data.Question }}" value="{{ date.sel_1 }}">{{ data.sel_1 }}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.Bool_overlap %}
+		<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_2 }}">{{ data.sel_2 }}
+		{% else %}
+		<input type=radio name="{{ data.Question }}" value="{{ date.sel_2 }}">{{ data.sel_2 }}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.sel_3 != None and data.sel_3 != '' %}
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_3 }}">{{ data.sel_3 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ date.sel_3 }}">{{ data.sel_3 }}
+			{% endif %}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.sel_4 != None and data.sel_4 != '' %}
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_4 }}">{{ data.sel_4 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ date.sel_4 }}">{{ data.sel_4 }}
+			{% endif %}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.sel_5 != None and data.sel_5 != '' %}
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_5 }}">{{ data.sel_5 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ date.sel_5 }}">{{ data.sel_5 }}
+			{% endif %}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.sel_6 != None and data.sel_6 != '' %}
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_6 }}">{{ data.sel_6 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ date.sel_6 }}">{{ data.sel_6 }}
+			{% endif %}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.sel_7 != None and data.sel_7 != '' %}
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_7 }}">{{ data.sel_7 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ date.sel_7 }}">{{ data.sel_7 }}
+			{% endif %}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.sel_8 != None and data.sel_8 != '' %}
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_8 }}">{{ data.sel_8 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ date.sel_8 }}">{{ data.sel_8 }}
+			{% endif %}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td>{% if data.sel_9 != None and data.sel_9 != '' %}
+			{% if data.Bool_overlap %}
+			<input type=checkbox name="{{ data.Question }}" value="{{ date.sel_9 }}">{{ data.sel_9 }}
+			{% else %}
+			<input type=radio name="{{ data.Question }}" value="{{ date.sel_9 }}">{{ data.sel_9 }}
+			{% endif %}
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec colspan=3 align=center>
+	<form action="/poll_update/" method="POST">
+		{% csrf_token %}
+		{{ form }}
+		<input type="hidden" name="data" value="{{ data.id }}" />
+		<input type="submit" class="submit_btn btn label-success" value="수정">
+	</form>
+	<form action="/poll_delete/" onsubmit="return form_submit()" method="POST">
+		{% csrf_token %}
+		{{ form }}
+		<input type="hidden" name="data" value="{{ data.id }}">
+		<input type="submit" class="submit_btn btn label-success" value="삭제">
+	</form>
+	</td>
+<tr>
+{% endfor %}
+<tr>
+	<td bgcolor=#ececec colspan=4 align=center>
+		<input type="button" value="질문추가하기" onclick="location.href='/poll_entry_page/'">
+		<input type="button" value="메인화면으로" onClick="location.href='/poll_page/'">
+	</td>
+</tr>
+</table>
+</BODY>
+</HTML>

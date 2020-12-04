@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>(주)카낙스바이오</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static 'main_page/assets/css/main.css' %}" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<div class="logo"><a href='main/main.html'>(주)카낙스바이오</a></div>
+				<a href="#menu" class="toggle"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu"> <!-- 메뉴 부분 -->
+				{% if request.session.username == 'khanaxbio' %}
+				<font size="4" color="white">환영합니다. 관리자님</font>
+				{% elif request.session.username != None %}
+				<font size="4" color="white">환영합니다. {{ request.session.username }}님</font>
+				{% endif %}
+				<ul class="links">
+					<li><a href='main/main.html'>Home</a></li>
+					{% if request.session.username == 'khanaxbio' %}
+						<li><a href='logout/'>Logout</a></li>
+						<li><a href='poll_page_admin/'>Poll</a></li>
+						<li><a href='review_admin/'>Review</a></li>
+					{% elif request.session.username != None %}
+						<li><a href='logout/'>Logout</a></li>
+						<li><a href='poll_page/'>Poll</a></li>
+						<li><a href='review/'>Review</a></li>
+					{% else %}
+						<li><a href='login/'>Login</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+
+		<!-- Banner -->
+		<!--
+			To use a video as your background, set data-video to the name of your video without
+			its extension (eg. images/banner). Your video must be available in both .mp4 and .webm
+			formats to work correctly.
+		-->
+			<section id="banner" data-video="{% static 'main_page/images/banner' %}">
+				<div class="inner">
+					<h1>카낙스바이오에 방문해주셔서 감사합니다</h1>
+					<p>체질에 맞는 건강식품을 찾을 수 있는 질문에 응답만 하시면 성실히 응답하겠습니다.<br />
+				</div>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="wrapper style2">
+				<div class="inner">
+					<div>
+						<div class="box">
+							<div class="image fit">
+								<img src="{% static 'main_page/images/picture01.jpg' %}" alt="" />
+							</div>
+							<div class="content">
+								<header class="align-center">
+									<h2>Hippocrafood</h2>
+									<p>히포크라테스는 의학의 아버지라 불리며, 그가 한 말 중 "음식으로 고칠 수 없는 병은 약으로도 고칠 수 없다"라고 말했다. 이런 뜻을 담아 최고의 건강식품을 만들겠다는 의미를 담아 히포크라푸드라고 정의했다.</p>
+								</header>
+								<hr />
+								<p align="center">탄생배경</p>
+								<p>
+								건강식품에 대한 올바른 전문지식이 없는 일반사람들이 제품을 구매 시 선택의 어려움을 겪고. 또한 일반적으로 건강식품을 판매하는 사람들은 전문적인 지식없이 제품을 판매하는 것이 현실. 그러므로 고객 또한 내심 이 제품이 과연 올바른 처방인지, 돈벌이를 위한 것인지 아닌지 불안해합니다.
+								</p>
+								<p>
+								히포크라푸드는 약방에서 전문약사와의 '상담'을 통해 약을 제조하 듯, 주어진 설문조사를 통해 고객에게 알맞은 처방을 해줍니다. 따라서, 전문지식이 갖지 않더라도, 체질, 상성, 궁합 그리고 효율을 따져 믿을 수 있는 제품을 제공합니다.
+								</p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style3">
+				<div class="inner">
+					<div id="flexgrid">
+						<div>
+							<header>
+								<h3>카낙스바이오의 3가지 약속</h3>
+							</header>
+						</div>
+						<div>
+							<header>								
+								<h3>저렴한 가격</h3>
+							</header>
+							<p>
+								기존 제품들은 포장비용, 유통단계를 통해 제조원가에 비해 가격이 많이 상승합니다. 저희 제품은 최소한의 절차를 통해 비용을 최소화 할 것을 약속합니다.
+							</p>
+							
+						</div>
+						<div>
+							<header>
+								<h3>휴대의 편리성</h3>
+							</header>
+							<p>
+								건강 식품을 여러가지 복용 할 경우 휴대하기 위한 통으로 포장되어 휴대하고 다니기가 어렵습니다. 히포크라푸드는 처방받은 약처럼 종이에 포장되어, 그 날 먹을 제품만 가지고 다니면 되므로, 휴대가 편리합니다.
+							</p>
+						</div>
+						<div>
+							<header>
+								<h3>적정량의 제품</h3>
+							</header>
+							<p>과다 생산을 통해 품질이 저하되지 않도록, 적정량 만큼만 생산하여 판매함으로써, 늘 신선한 제품을 선보이는 것을 약속합니다.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		<!-- Three -->
+			<section id="three" class="wrapper style2">
+				<div class="inner">
+					<div class="grid-style">
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="{% static 'main_page/images/pic02.jpg' %}" alt="" />
+								</div>
+								<div class="content">
+									<header class="align-center">
+										<h2>Lorem ipsum dolor</h2>
+										<p>maecenas feugiat ex purus, quis volutpat lacus placerat</p>
+									</header>
+									<hr />
+									<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="{% static 'main_page/images/pic03.jpg' %}" alt="" />
+								</div>
+								<div class="content">
+									<header class="align-center">
+										<h2>Vestibulum sit amet</h2>
+										<p>mattis sapien pretium tellus venenatis</p>
+									</header>
+									<hr />
+									<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+		<!-- Four -->
+			<section id="four" class="wrapper style3">
+				<div class="inner">
+
+					<header class="align-center">
+						<h2>Morbi interdum mollis sapien</h2>
+						<p>Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
+					</header>
+
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper">
+				<div class="inner">
+					<div class="copyright">
+						&copy; Untitled Design: <a href="https://templated.co/">TEMPLATED</a>. Images <a href="https://unsplash.com/">Unsplash</a>. Video <a href="http://coverr.co/">Coverr</a>.
+					</div>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'main_page/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'main_page/assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'main_page/assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'main_page/assets/js/skel.min.js' %}"></script>
+			<script src="{% static 'main_page/assets/js/util.js' %}"></script>
+			<script src="{% static 'main_page/assets/js/main.js' %}"></script>
+
+	</body>
+</html>

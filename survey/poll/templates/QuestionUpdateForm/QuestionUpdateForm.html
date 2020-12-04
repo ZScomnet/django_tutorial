@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="utf-8">
+	<TITLE>QuestionEntry</TITLE>
+</HEAD>
+<BODY>
+<form method="POST" action="/poll_entry/">
+{% csrf_token %}
+{{ form.as_table }}
+<table align=center border=1 bordercolor=white cellspacing=0 cellpadding=2>	
+<tr bgcolor=#ececec align=center>
+	<td colspan=4>설문조사 질문 등록</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>질문</td>
+	<td>
+		<input type=text name=Question size=30 maxlength=200 value="{{ update_data_row.Question}}"> * 필수
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>중복체크</td>
+	<td>
+		{% if update_data_row.Bool_overlap %}
+		<input type=radio name=Bool_overlap value=True checked="{{ 'checked' }}" /> 가능
+		<input type=radio name=Bool_overlap value=False /> 불가능
+		{% else %}
+		<input type=radio name=Bool_overlap value=True  /> 가능
+		<input type=radio name=Bool_overlap value=False checked="{{ 'checked' }}" /> 불가능
+		{% endif %}
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 1</td>
+	<td>
+		<input type=text name=sel_1 size=20 maxlength=15 value="{{ update_data_row.sel_1 }}"> * 필수
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 2</td>
+	<td>
+		<input type=text name=sel_2 size=20 maxlength=15 value="{{update_data_row.sel_2}}"> * 필수
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 3</td>
+	<td>
+		<input type=text name=sel_3 size=20 maxlength=15 value="{{update_data_row.sel_3}}">
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 4</td>
+	<td>
+		<input type=text name=sel_4 size=20 maxlength=15 value="{{update_data_row.sel_4}}">
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 5</td>
+	<td>
+		<input type=text name=sel_5 size=20 maxlength=15 value="{{update_data_row.sel_5}}"> 
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 6</td>
+	<td>
+		<input type=text name=sel_6 size=20 maxlength=15 value="{{update_data_row.sel_6}}">
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 7</td>
+	<td>
+		<input type=text name=sel_7 size=20 maxlength=15 value="{{update_data_row.sel_7}}">
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 8</td>
+	<td>
+		<input type=text name=sel_8 size=20 maxlength=15 value="{{update_data_row.sel_8}}">
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>보기 9</td>
+	<td>
+		<input type=text name=sel_9 size=20 maxlength=15 value="{{update_data_row.sel_9}}">
+	</td>
+</tr>
+	<td>
+		<input type=hidden name=id value="{{update_data_row.id}}">
+	</td>
+<tr>
+	<td bgcolor=#ececec colspan=4 align=center>
+		<input type="submit" value="등록하기">
+	</td>
+</tr>
+</table>
+</form>
+</BODY>
+</HTML>

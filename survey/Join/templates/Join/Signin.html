@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="utf-8">
+	<TITLE>Sign In</TITLE>
+</HEAD>
+<BODY>
+<form method="POST" action= "/join_member/" >
+{% csrf_token %}
+{{ form.as_table }}
+<table align=center border=1 bordercolor=white cellspacing=0 cellpadding=2>	
+<tr bgcolor=#ececec align=center>
+	<td colspan=4>회원가입</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>ID</td>
+	<td>
+		<input type=text name=ID size=20 maxlength=15> 최대 10글자
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>PW</td>
+	<td>
+		<input type=password name=Password size=20 maxlength=15> 최대 15글자
+	</td>
+</tr>
+
+<tr>
+	<td bgcolor=#ececec align=center>이름</td>
+	<td>
+		<input type=text name=Name size=20 maxlength=10>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>성별</td>
+	<td>
+		<input type=radio name=Sex value="man">남성
+		<input type=radio name=Sex value="woman">여성
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec>생년월일</td>
+	<td>
+		<input type=text name=Birth size=12 maxlength=10> ex.2019-01-01
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec colspan=4 align=center>
+		<input type="submit" value="가입하기">
+	</td>
+</tr>
+</table>
+</form>
+</BODY>
+</HTML>

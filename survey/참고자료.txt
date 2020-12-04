@@ -1,0 +1,34 @@
+https://dolma.tistory.com/20? - 회원가입 폼
+https://www.tuwlab.com/ece/26465 - DB연동하는법
+https://kamang-it.tistory.com/entry/Django-07form%EB%A7%8C%EB%93%A4%EA%B8%B0?category=728725
+- DB에 값 저장하는 법
+https://rednooby.tistory.com/84
+https://stackoverflow.com/questions/7573611/how-to-receive-post-data-in-django
+- DB값 호출
+http://pythonstudy.xyz/python/article/310-Django-%EB%AA%A8%EB%8D%B8-API
+- DB 호출 메소드
+https://www.youtube.com/watch?v=VxOsCKMStuw
+-템플릿 언어
+https://stackoverflow.com/questions/35479608/how-to-send-data-from-django-template-to-views-method-in-post-request-or-in-a-wa
+-호출한 DB 값(템플릿 언어로) 다시 view로 옮기는 법
+http://pythonstudy.xyz/python/article/310-Django-%EB%AA%A8%EB%8D%B8-API
+- DB(모델) API
+https://docs.djangoproject.com/en/2.0/ref/contrib/postgres/fields/
+- DB ArrayField
+http://b.redinfo.co.kr/43
+https://jootc.com/p/201807211394
+- 경고창 박스 사용법
+https://docs.djangoproject.com/en/2.2/topics/http/sessions/
+https://somnusnote.tistory.com/entry/Django%EC%9D%98-session-%EC%B2%98%EB%A6%AC
+- 세션 이용방법
+https://templated.co/
+- 무료 템플릿사이트
+https://www.youtube.com/watch?v=Pkrm2nucaKA
+https://rednooby.tistory.com/105
+- 템플릿 적용방법
+https://stackoverflow.com/questions/2417127/how-do-i-get-the-values-of-all-selected-checkboxes-in-a-django-request-post
+- html checkbox/radio 값 받아오는 방법
+https://bluejake.tistory.com/43
+- url get parameter 받아오는 방법
+https://forybm.tistory.com/2
+- DB 테이블 삭제 후 재생성

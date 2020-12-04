@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatiable" content="IE=edje">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<TITLE> Review </TITLE>
+	<link rel="stylesheet" href="{% static 'Review/css/bootstrap.css' %}">
+</HEAD>
+
+<BODY>
+	<H1>{{ total_data.ID }}님의 상담내역/결과</H1>
+	<hr/>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<td>{{ total_data.Date }} 설문조사 내용입니다.</td>
+		</tr>
+		<tr>
+			<td>Question</td>
+			<td>Answer</td>
+		</tr>
+		</thead>
+		<tbody>
+		{% for key,value in total_data.Question_and_Answer %}
+		<tr>
+			<td>{{forloop.counter}}. {{key}}</td>
+			<td>{{value}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<hr/>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<td>처방내역</td>
+			</tr>
+			<tr>
+				<td>처방약</td>
+				<td>복용 기간(일)</td>
+				<td>가격</td>
+			</tr>
+		</thead>
+		<tbody>
+				{% if total_data.Poll_Result != None %}
+				{% for data_list in total_data.Poll_Result%}
+				<tr>
+					{% for data in data_list %}
+					<td>{{ data }}</td>
+					{% endfor %}					
+				</tr>
+				{% endfor %}
+				<tr>
+					<td>총 금액</td>
+					<td></td>
+					<td>{{ total_data.price }}</td>
+				</tr>
+				{% else %}
+				<tr>
+					<td>처방내역 대기중입니다.</td>
+				</tr>
+				{% endif %}
+		</tbody>
+	</table>
+	<hr/>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<td>관리자 답변</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% if total_data.Admin_Answer != None %}
+				<td>{{ total_data.Admin_Answer }}</td>
+				{% else %}
+				<td>관리자 답변 대기중입니다.</td>
+				{% endif %}
+			</tr>
+		</tbody>
+	</table>
+<script src="{% static 'Review/js/bootstrap.js' %}"></script>
+</BODY>
+</HTML>
