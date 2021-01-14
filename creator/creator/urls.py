@@ -14,8 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls import url
 
+from member.views import kakao_login,kakao_callback
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('account/',include('allauth.urls')),
+    path('account/login/kakao/',kakao_login,name='kakao_login'),
+    path('account/login/kakao/callback',kakao_callback,name='kakao_callback'),
+    # path('account/registration/',include('rest_auth.registration.urls')),
+    # path('account/',include('rest_auth_urls')),
+    # url(r'account/registration/confirm-email/(?P<key>.+)/$',confirm_email,name="confirm_email"),
+    # path('',include('django.contrib,auth,urls')),
+    # Oauth urls
 ]
+
