@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<HTML lang="ko">
+<HEAD>
+	<meta charset="utf-8">
+	<TITLE>Join Vegemall</TITLE>
+	<script type="text/javascript">
+		function validate(){
+			var password1 = document.getElementById('password1').value;
+			var password2 = document.getElementById('password2').value;
+
+			if(password1 == "" || password2 == ""){
+				document.getElementById("password_check").innerHTML = ""
+			}
+			else if(password1 != password2){
+				document.getElementById("password_check").innerHTML = "<font color=red> 비밀번호가 일치하지 않습니다.</font>"
+			}
+			else{
+				document.getElementById("password_check").innerHTML = "<font color=blue> 비밀번호가 일치합니다.</font>"
+			}
+		}
+	</script>
+</HEAD>
+<BODY>
+<form method="POST" action="/account/join/kakao/">
+{% csrf_token %}
+{{ form.as_table }}
+<table align=center border=1 bordercolor=white cellspacing=0 cellpadding=2>	
+<tr bgcolor=#ececec align=center>
+	<td colspan=4>회원가입</td>
+</tr>
+<tr>
+	<input type=hidden id=id name=id size=100 value={{ id }}>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>이름</td>
+	<td>
+		<input type=text id=name name=name size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>ID</td>
+	<td>
+		<input type=text id=username name=username size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>비밀번호</td>
+	<td>
+		<input type=password id=password1 name=password1 size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>비밀번호 확인</td>
+	<td>
+		<input type=password id=password2 name=password2 size=20 maxlength=15 onkeyup="validate()">
+		<td id="password_check" align=left width=250></td>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec align=center>연락처</td>
+	<td>
+		<input type=text id=tel name=tel size=20 maxlength=15>
+	</td>
+</tr>
+<tr>
+	<td bgcolor=#ececec colspan=4 align=center>
+		<input type="submit" value="가입하기">
+	</td>
+</tr>
+</table>
+</form>
+</BODY>
+</HTML>

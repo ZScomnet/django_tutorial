@@ -47,12 +47,21 @@ class User(AbstractBaseUser):
     	max_length=100,
     	unique=True
     )
-    token = models.CharField(
-    	verbose_name='token',
+    access_token = models.CharField(
+    	verbose_name='access_token',
     	max_length=100,
+    	unique=True,
+    )
+    account_info = models.CharField(
+    	verbose_name='account_info',
+    	max_length=50,
     	unique=False,
     )
-
+    tel = models.CharField(
+    	verbose_name='tel',
+    	max_length=11,
+    	unique=False,
+    )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
