@@ -16,19 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
-from member.views import kakao_login,kakao_callback,kakao_join
+from member.views import SignInView,KakaoCallbackView,SocialLoginView,CommunityLoginView
+from main.views import LoginFormView
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('account/',include('allauth.urls')),
-    path('account/login/kakao/',kakao_login,name='kakao_login'),
-    path('account/login/kakao/callback/',kakao_callback,name='kakao_callback'),
-  	path('account/join/kakao/',kakao_join,name='kakao_join'),
+    path('account/login/<social>/',SocialLoginView.as_view(),name='SocialLogin'),
+    path('account/login/kakao/callback/',KakaoCallbackView.as_view(),name='KakaoCallback'),
+  	path('account/join/',SignInView.as_view(),name='SignIn'),
+  	path('account/member/login/',CommunityLoginView.as_view(),name='CommunityLogin'),
     # path('account/registration/',include('rest_auth.registration.urls')),
     # path('account/',include('rest_auth_urls')),
     # url(r'account/registration/confirm-email/(?P<key>.+)/$',confirm_email,name="confirm_email"),
     # path('',include('django.contrib,auth,urls')),
     # Oauth urls
+
+    path('main/login/',LoginFormView.as_view(),name="LoginForm")
+    # Community Forms urls
 ]
 

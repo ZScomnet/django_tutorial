@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
 
     'member',
+    'main',
 ]
 
 SITE_ID = 1 # Defense error :/ 
@@ -88,7 +89,7 @@ ROOT_URLCONF = 'creator.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'member','templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,10 +142,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LOGIN_REDIRECT_URL = '/'  # Redirection page after login
-ACCOUNT_LOGOUT_REDIRECT_URL = '/' # Redirection page after logout
+LOGIN_REDIRECT_URL = '/main/'  # Redirection page after login
+LOGOUT_REDIRECT_URL = '/main/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/main/' # Redirection page after logout
+ACCOUNT_LOGIN_REDIRECT_URL = '/main/'
 ACCOUNT_LOGOUT_ON_GET = True # Auto logout after to click logout button
-
 
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
