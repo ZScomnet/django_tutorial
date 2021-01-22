@@ -37,12 +37,17 @@ class CommunityLoginView(View):
 			member = User.objects.get(ID=request.POST['ID'])
 			if check_password(request.POST['password'],member.password):
 				update_last_login(None,member)
-				return HttpResponse("Login Complete!!")
+				request.session['username'] = member.name
+				return redirect("/main/")
 			else:
 				return HttpResponse("Check your ID or Password")
 		except:
 			return HttpResponse("Check your ID or Password")
 
+class CommunityLogoutView(View):
+	def get(self,request):
+		request.session.pop('user')
+		return redirect("/main/")
 
 class SocialLoginView(View):
 	def get(self, request, social):
@@ -50,6 +55,15 @@ class SocialLoginView(View):
 			kakao_app = SocialApp.objects.get(provider="kakao")
 			app_key = kakao_app.client_id
 			return redirect("https://kauth.kakao.com/oauth/authorize?client_id="+app_key+"&redirect_uri=http://localhost:8000/account/login/kakao/callback/&response_type=code")
+
+		elif social == "google":
+			google_app = SocialApp.objects.get(provider="google")
+			app_key = google_app.client_id
+			return redirect("https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id="+app_key+"&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccount%2Fgoogle%2Flogin%2Fcallback%2F&scope=email%20profile&response_type=code&state=xUF6TP4C8S9y&flowName=GeneralOAuthFlow")
+
+# class GoogleCallbackView(View):
+
+
 
 class KakaoCallbackView(View):
 	host_url = 'http://localhost:8000'
@@ -93,3 +107,6 @@ class KakaoCallbackView(View):
 		except:
 			return HttpResponse("Check to provide Email")
 		# Input other data(ID,password,Tel etc..)
+
+# class GoogleCallbackView(View):
+# 	def get(self, request):

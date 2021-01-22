@@ -2,29 +2,31 @@ from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 # email == 인증한 이메일
-# token == kakao or google?
+# account_info == kakao or google etc..
 # ID == 로그인 할 떄 쓰는 ID
 # name == 닉네임
 # password == 로그인 할 떄 쓰는 password
+# tel == 연락처
+# access_token == 인증 계정 프로필 token
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, password=None):
+    def create_user(self, email, username, password=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
-            name=name,
+            username=username,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, name, password):
+    def create_superuser(self, email, username, password):
         user = self.create_user(
             email=email,
             password=password,
-            name=name,
+            username=username,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -37,8 +39,8 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    name = models.CharField(
-    	verbose_name='name',
+    username = models.CharField(
+    	verbose_name='username',
     	max_length=100,
     	unique=True,
     )
@@ -71,7 +73,7 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.name
+        return self.username
 
     def has_perm(self, perm, obj=None):
         return True
