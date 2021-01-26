@@ -1,11 +1,15 @@
 from django.shortcuts import render,HttpResponse,redirect
-from allauth.socialaccount.models import SocialApp,SocialAccount
+from allauth.socialaccount.models import SocialApp
+from allauth.account.models import EmailAddress
 import urllib
 import requests
+import base64
+import json
 from .models import User
 from django.views.generic import View
 from django.contrib.auth.hashers import check_password,make_password
 from django.contrib.auth.models import update_last_login
+from django.contrib.auth import logout
 
 class SignInView(View):
 	def get(self,request):
@@ -15,8 +19,8 @@ class SignInView(View):
 			return HttpResponse("Exist ID already")
 		else:
 			new_member = User.objects.get(id=request.POST['id'])
-			new_member.name = request.POST['name']
-			new_member.ID = request.POST['username']
+			new_member.username = request.POST['username']
+			new_member.ID = request.POST['ID']
 			new_member.password = make_password(request.POST['password1'])
 			new_member.tel = request.POST['tel']
 			kakao_token_delete = requests.get(
@@ -46,7 +50,7 @@ class CommunityLoginView(View):
 
 class CommunityLogoutView(View):
 	def get(self,request):
-		request.session.pop('user')
+		request.session.pop('username')
 		return redirect("/main/")
 
 class SocialLoginView(View):
@@ -59,11 +63,7 @@ class SocialLoginView(View):
 		elif social == "google":
 			google_app = SocialApp.objects.get(provider="google")
 			app_key = google_app.client_id
-			return redirect("https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id="+app_key+"&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccount%2Fgoogle%2Flogin%2Fcallback%2F&scope=email%20profile&response_type=code&state=xUF6TP4C8S9y&flowName=GeneralOAuthFlow")
-
-# class GoogleCallbackView(View):
-
-
+			return redirect("https://accounts.google.com/o/oauth2/auth?client_id="+app_key+"&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccount%2Flogin%2Fgoogle%2Fcallback%2F&scope=email%20profile&response_type=code&state=xUF6TP4C8S9y")
 
 class KakaoCallbackView(View):
 	host_url = 'http://localhost:8000'
@@ -101,12 +101,45 @@ class KakaoCallbackView(View):
 			new_member.save()
 			# Create new model for new member
 
-			send_id_column = User.objects.get(email=email)
-			send_id = send_id_column.id
+			send_id_row = User.objects.get(email=email)
+			send_id = send_id_row.id
 			return render(request,"SignInForm.html",{'id' : send_id,})
 		except:
 			return HttpResponse("Check to provide Email")
 		# Input other data(ID,password,Tel etc..)
 
-# class GoogleCallbackView(View):
-# 	def get(self, request):
+class GoogleCallbackView(View):
+	host_url = "http://localhost:8000"
+	access_token_request_uri = 'https://oauth2.googleapis.com/token?'
+	def get(self, request):
+		code = request.GET['code']
+		google_app = SocialApp.objects.get(provider="google")
+		client_id = google_app.client_id
+		client_secret = google_app.secret
+		redirect_uri = self.host_url + '/account/login/google/callback/'
+		self.access_token_request_uri += 'code=' + code + '&client_id=' + client_id + '&client_secret=' + client_secret + '&redirect_uri=' + redirect_uri + '&grant_type=authorization_code'	
+		access_token_request = requests.post(self.access_token_request_uri)
+		# Request access_token with id_token
+		token_set = access_token_request.json() # 
+		id_token_set = token_set.get("id_token").split('.')
+		if len(id_token_set) != 3: # Invalid token
+			return HttpResponse("Invalid data")
+
+		b64_id_token = id_token_set[1]
+		b64_id_token = b64_id_token + '=' * (4-len(b64_id_token)%4)
+		id_token = base64.b64decode(b64_id_token) # User profile in token
+		# Decode id_token in google request
+
+		profile = json.loads(id_token)
+		email = profile['email']
+		try:
+			new_member = User(account_info="google",email=email)
+			new_member.save()
+		except:
+			pass
+		# Create new model for new member
+		send_id_row = User.objects.get(email=email)
+		send_id = send_id_row.id
+		logout(request) # google logout
+		
+		return render(request,"SignInForm.html",{'id':send_id,})	

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.google',
 
     'member',
     'main',
@@ -54,15 +55,10 @@ INSTALLED_APPS = [
 
 SITE_ID = 1 # Defense error :/ 
 
-SOCIALACCOUNT_PROVIDERS = {
-    'kakao': {
-        'APP': {
-            'client_id': '481e0840e20536662de4f736e7b0cf70',
-            'secret': 528764,
-            'key': '',
-        }
-    }
-} # change secret.json
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES' : (
@@ -142,10 +138,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LOGIN_REDIRECT_URL = '/main/'  # Redirection page after login
+LOGIN_REDIRECT_URL = '/account/login/google/callback/'  # Redirection page after login
 LOGOUT_REDIRECT_URL = '/main/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/main/' # Redirection page after logout
-ACCOUNT_LOGIN_REDIRECT_URL = '/main/'
+ACCOUNT_LOGIN_REDIRECT_URL = '/account/login/google/callback/'
 ACCOUNT_LOGOUT_ON_GET = True # Auto logout after to click logout button
 
 ACCOUNT_USERNAME_REQUIRED = False
@@ -153,6 +149,10 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 AUTH_USER_MODEL = "member.User"
+
+SESSION_COOKIE_AGE = 1200
+SESSION_SAVE_EVERY_REQUEST = True
+# Session timeout setting time(s) (1200 == 20min)
 
 LANGUAGE_CODE = 'ko-kr'
 
