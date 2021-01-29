@@ -11,7 +11,7 @@ from django.contrib.auth.hashers import check_password,make_password
 from django.contrib.auth.models import update_last_login
 from django.contrib.auth import logout
 
-class SignInView(View):
+class SignInView(View): # New_member View
 	def get(self,request):
 		return HttpResponse("Invalid access")
 	def post(self,request):
@@ -32,26 +32,46 @@ class SignInView(View):
 			# Save new member data
 			return HttpResponse("Join Complete")
 
-class CommunityLoginView(View):
+class ChangeUserPasswordView(View):
+	def get(self,request):
+		return HttpResponse("Invalid access")
+	def post(self,request):
+		password = make_password(request.POST['password1'])
+		change_member = User.objects.get(id=request.POST['id'])
+		if check_password(request.POST['password2'],password) == False:
+			return HttpResponse("Check Password")
+		change_member.password = password
+		change_member.save()
+		return HttpResponse("Change password Complete!")
+
+class CommunityLoginView(View): # LogincheckView
 	def get(self, request):
 		return HttpResponse("Invalid access")
-
 	def post(self, request):
 		try:
 			member = User.objects.get(ID=request.POST['ID'])
 			if check_password(request.POST['password'],member.password):
 				update_last_login(None,member)
-				request.session['username'] = member.name
+				request.session['username'] = member.username
 				return redirect("/main/")
 			else:
-				return HttpResponse("Check your ID or Password")
+				return HttpResponse("Check your ID or password")
 		except:
-			return HttpResponse("Check your ID or Password")
+			return HttpResponse("Check your ID or password")
 
-class CommunityLogoutView(View):
+class CommunityLogoutView(View): # LogoutView
 	def get(self,request):
 		request.session.pop('username')
 		return redirect("/main/")
+
+class CommunitySelectionView(View): # Select social for finding user data
+	host_url = 'http://localhost:8000'
+	def get(self,request,social):
+		request.session['find'] = True
+		if social == "kakao":
+			return redirect(self.host_url+"/account/login/"+social+"/")
+		elif social == "google":
+			return redirect(self.host_url+"/account/login/"+social+"/")
 
 class SocialLoginView(View):
 	def get(self, request, social):
@@ -97,22 +117,39 @@ class KakaoCallbackView(View):
 					headers={"Authorization" : f"Bearer {access_token}"},
 			) # Kakao logout
 			email = profile['email']
-			new_member = User(account_info="kakao",email=email)
-			new_member.save()
-			# Create new model for new member
-
-			send_id_row = User.objects.get(email=email)
-			send_id = send_id_row.id
-			return render(request,"SignInForm.html",{'id' : send_id,})
+			if User.objects.filter(email=email).filter(account_info="kakao") and request.session['find']:
+				# Find ID or Password
+				send_id_row = User.objects.get(email=email)
+				send_id = send_id_row.id
+				request.session.pop('find')
+				return render(request,"UserFindForm.html",{'ID':send_id_row.ID,'id':send_id})
+			else: # Wrong information
+				request.session.pop('find')
+				return HttpResponse("Non-existent data")
+		except KeyError: # New member Error
+			if User.objects.filter(email=email).filter(account_info="kakao"):
+				return HttpResponse("Exist member already")
+			else:
+				new_member = User(account_info="kakao",email=email)
+				new_member.save()
+				# Create new model for new member
+				send_id_row = User.objects.get(email=email)
+				send_id = send_id_row.id
+				return render(request,"SignInForm.html",{'id' : send_id,})
 		except:
-			return HttpResponse("Check to provide Email")
-		# Input other data(ID,password,Tel etc..)
+			return HttpResponse("Invalid access")
+		return HttpResponse("Invalid access")
 
 class GoogleCallbackView(View):
 	host_url = "http://localhost:8000"
 	access_token_request_uri = 'https://oauth2.googleapis.com/token?'
 	def get(self, request):
 		code = request.GET['code']
+		try:
+			if request.session['find']:
+				user_find = True
+		except KeyError:
+			user_find = False
 		google_app = SocialApp.objects.get(provider="google")
 		client_id = google_app.client_id
 		client_secret = google_app.secret
@@ -132,14 +169,26 @@ class GoogleCallbackView(View):
 
 		profile = json.loads(id_token)
 		email = profile['email']
-		try:
+		logout(request) # google logout
+		if User.objects.filter(email=email).filter(account_info="google") and user_find:
+			# Find User ID or password
+			send_id_row = User.objects.get(email=email)
+			send_id = send_id_row.id
+			return render(request,"UserFindForm.html",{'ID':send_id_row.ID,'id':send_id})
+		elif user_find:
+			return HttpResponse("Non-existent data")
+		elif User.objects.filter(email=email).filter(account_info="google").filter(ID=""):
+			# Error : Dummy data after to obtain account token
+			send_id_row = User.objects.get(email=email)
+			send_id = send_id_row.id
+			return render(request,"SignInForm.html",{'id':send_id,})
+		elif User.objects.filter(email=email).filter(account_info="google"):
+			return HttpResponse("Exist member already")
+		else:
 			new_member = User(account_info="google",email=email)
 			new_member.save()
-		except:
-			pass
-		# Create new model for new member
-		send_id_row = User.objects.get(email=email)
-		send_id = send_id_row.id
-		logout(request) # google logout
-		
-		return render(request,"SignInForm.html",{'id':send_id,})	
+			# Create new model for new member
+			send_id_row = User.objects.get(email=email)
+			send_id = send_id_row.id
+			return render(request,"SignInForm.html",{'id':send_id,})
+		# Create new model for new member	
